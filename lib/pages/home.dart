@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/auth_service.dart';
+import 'package:swifty_companion/pages/profile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -10,13 +12,13 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          searchBar()
+          searchBar(context)
         ],
       )
     );
   }
 
-  Container searchBar() {
+  Container searchBar(BuildContext context) {
     return Container(
           margin: const EdgeInsets.only(top: 180, left: 28, right: 20),
           decoration: BoxDecoration(
@@ -44,6 +46,13 @@ class HomePage extends StatelessWidget {
                 borderSide: BorderSide.none
               )
             ),
+            onSubmitted: (value) => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Profile()),
+                ),
+                logger.i(value)
+            },
           ),
         );
   }
