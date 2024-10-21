@@ -46,12 +46,12 @@ class HomePage extends StatelessWidget {
                 borderSide: BorderSide.none
               )
             ),
-            onSubmitted: (value) => {
+            onSubmitted: (value) {
+                logger.i(value);
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Profile()),
-                ),
-                logger.i(value)
+                  MaterialPageRoute(builder: (context) => Profile(data: value)),
+                );
             },
           ),
         );

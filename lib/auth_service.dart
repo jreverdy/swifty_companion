@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 var logger = Logger();
 
 class AuthService {
+
   final String uid = dotenv.env['UID'] ?? '';
   final String secret = dotenv.env['SECRET'] ?? '';
   final String tokenUrl = 'https://api.intra.42.fr/oauth/token';

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/pages/home.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
-
+  final String data;
+  const Profile({super.key, required this.data});
   @override
   Widget build(BuildContext context) {
+    // dynamic user = await UserRepository.fetchUser(data);
+    // logger.i(user);
     return Scaffold(
       appBar: appBar(),
     );

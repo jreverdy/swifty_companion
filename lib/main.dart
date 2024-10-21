@@ -1,9 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:swifty_companion/auth_service.dart';
-import 'package:swifty_companion/pages/home.dart' ; 
-import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:swifty_companion/pages/home.dart';
+import 'package:swifty_companion/user.dart';
+import 'package:swifty_companion/user_repository.dart';
 
 // Future fetch(String token) async {
 //   try{
@@ -26,21 +27,23 @@ import 'package:http/http.dart' as http;
 
 Future <void> main() async {
   await dotenv.load(fileName: ".env");
-
   String? token = await AuthService().authenticate();
   if (token == null){
     logger.e('Token error');
     return;
   }
-  logger.i(token);
-  // var userInfo = await fetch(token);
-  
-  // if (userInfo != null) {
-  //   logger.i('User Info: $userInfo');
-  //   // You can process or display userInfo as needed
-  // } else {
-  //   logger.e('Failed to fetch user info');
-  // }
+  else{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+    logger.i(token);
+  }
+  try {
+    User? user = await UserRepository().fetchUser('mgolinva');
+    logger.i(user?.poolYear);
+  }
+  catch(e){
+    logger.e('Error main: $e');
+  }
   runApp(const MyApp());
 }
 
