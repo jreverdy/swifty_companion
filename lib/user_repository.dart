@@ -2,7 +2,7 @@ import 'dart:convert'; // Pour encoder/décoder JSON
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:swifty_companion/auth_service.dart';
-import 'package:swifty_companion/user.dart';
+import 'package:swifty_companion/models/user_model.dart';
 
 Future<String?> getToken() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -11,8 +11,8 @@ Future<String?> getToken() async {
 }
 
 class UserRepository {
-  final Map<String, User?> _userCache = {};
-  Future<User?> fetchUser(String username) async {
+  final Map<String, UserModel?> _userCache = {};
+  Future<UserModel?> fetchUser(String username) async {
     if (_userCache.containsKey(username)){
       return _userCache[username];
     }
@@ -25,8 +25,7 @@ class UserRepository {
         }
       );
       if (res.statusCode == 200){
-        logger.i(jsonDecode(res.body)['campus']);
-        User user = User.fromJson(jsonDecode(res.body));
+        UserModel user = UserModel.fromJson(jsonDecode(res.body));
         _userCache[username] = user;
         return user;
       } 
