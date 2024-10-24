@@ -22,7 +22,7 @@ class ProjectUserModel {
   });
 
   factory ProjectUserModel.fromJson(Map<String, dynamic> json) =>
-      _$ProjectUserModelFromJson(json);
+     _$ProjectUserModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ProjectUserModelToJson(this);
 }

@@ -14,3 +14,12 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+## TODO
+
+- gerer erreur login qui n'existe pas
+- chaine vide dans le textfield (error)
+- login piscineux qui fait crash
+- login new studs qui fait crash aussi
+- rendre tout ca beau

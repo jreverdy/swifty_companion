@@ -23,12 +23,9 @@ class _ProfileState extends State<Profile> {
   Future<void> fetchUserData() async {
     try{
       UserModel? fetchedUser = await UserRepository().fetchUser(widget.data);
-      for (var x in fetchedUser!.projectsUsers){
-        logger.i(x.project.slug);
-      }
+
       setState(() {
         user = fetchedUser;
-        
       });
     } catch(e){
       logger.e('Error fetching user data: $e');
@@ -51,24 +48,38 @@ class _ProfileState extends State<Profile> {
   }
 
  Widget projectList() {
-  final filteredProjects = user!.projectsUsers.where((projectUser) {
-    return !projectUser.project.slug.startsWith("c-piscine");
-  }).toList();
+  var filteredProjects = [];
+  if (user!.cursusUsers.length > 1){
+      filteredProjects = user!.projectsUsers.where((projectUser) {
+      return !projectUser.project.slug.startsWith("c-piscine");
+    }).toList();
+  }
+  else{
+      filteredProjects = user!.projectsUsers.where((projectUser) {
+      return projectUser.project.slug.startsWith("c-piscine");
+    }).toList();
+  }
   return ListView.builder(
-    itemCount: filteredProjects.length, // Assurez-vous que vous utilisez la bonne longueur ici
+    itemCount: filteredProjects.length, 
     itemBuilder: (context, index) {
-      final projectUser = filteredProjects[index]; // On récupère chaque élément de la liste
-      
-      return ListTile(
-        title: Text(projectUser.project.name), // Utilisation de projectUser pour accéder à project
-        subtitle: Text(projectUser.status), // Exemple d'ajout d'un sous-titre
-        trailing: projectUser.isValidated == true
-            ? const Icon(Icons.check, color: Colors.green) // Affiche une icône si validé
-            : const Icon(Icons.close, color: Colors.red), // Affiche une autre icône si non validé
+      final projectUser = filteredProjects[index];
+      return Container(
+        margin: const EdgeInsets.fromLTRB(7, 2, 7, 2),
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: BorderRadius.circular(5)
+        ),
+        child: ListTile(
+          title: Text(projectUser.project.name), 
+          subtitle: Text(projectUser.status), 
+          trailing: projectUser.isValidated == true
+              ? const Icon(Icons.check, color: Colors.green) 
+              : const Icon(Icons.close, color: Colors.red),
+        ),
       );
     },
   );
-}
+  }
 
 
 
@@ -77,7 +88,10 @@ class _ProfileState extends State<Profile> {
         height: 550,
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: Colors.black,
+          image: DecorationImage(image: 
+            AssetImage('assets/matrix.jpg'),
+            fit: BoxFit.cover
+            ),
         ),
         child:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -113,6 +127,13 @@ class _ProfileState extends State<Profile> {
   }
 
   Stack percentBar() {
+    var levelPercentage = 0.0;
+    if (user!.cursusUsers.length > 1){
+      levelPercentage = user!.cursusUsers[1].level;
+    }
+    else{
+      levelPercentage = user!.cursusUsers[0].level;
+    }
     return Stack(
             alignment: Alignment.center,
             children: [
@@ -124,14 +145,14 @@ class _ProfileState extends State<Profile> {
                   borderRadius: BorderRadius.circular(10),
                   child: LinearProgressIndicator(
                     minHeight: 30,
-                    value: user!.cursusUsers[1].level % 1, 
-                    backgroundColor: Colors.grey[300],
+                    value: levelPercentage % 1, 
+                    backgroundColor: Colors.grey[400],
                     valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 17, 158, 92)),
                   ),                  
                 ),
               ),
               Text(
-                '${user!.cursusUsers[1].level}%',
+                '$levelPercentage%',
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -143,12 +164,19 @@ class _ProfileState extends State<Profile> {
   }
 
   Container userDetails() {
+    String? grade = '';
+    if (user!.cursusUsers.length > 1){
+        grade = user!.cursusUsers[1].grade;
+    }
+    else{
+        grade = 'Novice';
+    }
     return Container(
             height: 120,
             width: double.infinity,
             margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             decoration: BoxDecoration(
-              color: Colors.grey[850],
+              color: Colors.grey[850]!.withOpacity(0.9),
               borderRadius: BorderRadius.circular(10)
             ),
             child:  Column(
@@ -249,7 +277,7 @@ class _ProfileState extends State<Profile> {
                     Opacity(
                       opacity: 0.8,
                       child: Text(
-                        '${user!.cursusUsers[1].grade}',
+                        '$grade',
                         style: const TextStyle(
                           fontSize: 15,
                           color: Colors.white
@@ -263,6 +291,4 @@ class _ProfileState extends State<Profile> {
             ),
           );
   }
-  
-  
 }
