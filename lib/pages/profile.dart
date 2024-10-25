@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:swifty_companion/auth_service.dart';
 import 'package:swifty_companion/models/user_model.dart';
-import 'package:swifty_companion/user_repository.dart';
+import 'package:swifty_companion/widgets/achievements_list.dart';
+import 'package:swifty_companion/widgets/projects_list.dart';
+import 'package:swifty_companion/widgets/skills_list.dart';
 
 class Profile extends StatefulWidget {
-  final String data;
-  const Profile({super.key, required this.data});
+  final UserModel? userReceived;
+  const Profile({super.key, required this.userReceived});
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -13,25 +14,27 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   UserModel? user;
+  final List<bool> _buttonStates = [true, false, false];
+  int _selectedList = 0;
 
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    user = widget.userReceived;
   }
 
-  Future<void> fetchUserData() async {
-    try{
-      UserModel? fetchedUser = await UserRepository().fetchUser(widget.data);
-
+  void toggleButtonColor(int index){
       setState(() {
-        user = fetchedUser;
+        _buttonStates[index] = !_buttonStates[index];
+        for (var i = 0; i < _buttonStates.length; i++){
+          if (i != index && _buttonStates[i] == true){
+            _buttonStates[i] = !_buttonStates[i];
+          }
+        }
+        _selectedList = index;
       });
-    } catch(e){
-      logger.e('Error fetching user data: $e');
-    }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     if (user == null){
@@ -41,47 +44,50 @@ class _ProfileState extends State<Profile> {
       body: Column(
         children: [
           customAppBar(),
-          Expanded(child: projectList())
+          const SizedBox(height: 5),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            _listButton('Projects', 0),
+            _listButton('Achievements', 1),
+            _listButton('Skills', 2),
+            ],
+          ),
+          Expanded(child: _listView())
         ],
       ),
     );
   }
 
- Widget projectList() {
-  var filteredProjects = [];
-  if (user!.cursusUsers.length > 1){
-      filteredProjects = user!.projectsUsers.where((projectUser) {
-      return !projectUser.project.slug.startsWith("c-piscine");
-    }).toList();
-  }
-  else{
-      filteredProjects = user!.projectsUsers.where((projectUser) {
-      return projectUser.project.slug.startsWith("c-piscine");
-    }).toList();
-  }
-  return ListView.builder(
-    itemCount: filteredProjects.length, 
-    itemBuilder: (context, index) {
-      final projectUser = filteredProjects[index];
-      return Container(
-        margin: const EdgeInsets.fromLTRB(7, 2, 7, 2),
-        decoration: BoxDecoration(
-          color: Colors.grey[300],
-          borderRadius: BorderRadius.circular(5)
-        ),
-        child: ListTile(
-          title: Text(projectUser.project.name), 
-          subtitle: Text(projectUser.status), 
-          trailing: projectUser.isValidated == true
-              ? const Icon(Icons.check, color: Colors.green) 
-              : const Icon(Icons.close, color: Colors.red),
-        ),
-      );
-    },
-  );
+  Widget _listButton(String label, int index){
+    return OutlinedButton(
+              style:  OutlinedButton.styleFrom(
+                backgroundColor: _buttonStates[index] ? const Color.fromARGB(255, 17, 158, 92) : Colors.transparent, 
+                foregroundColor: _buttonStates[index] ? Colors.white : Colors.black, 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(7),
+                ),
+                side: BorderSide(color: _buttonStates[index] ? const Color.fromARGB(255, 17, 158, 92) : Colors.black),
+              ),
+              onPressed: () {
+                toggleButtonColor(index);
+              },
+              child: Text(label),
+    );
   }
 
-
+ Widget _listView(){
+    switch(_selectedList){
+      case 0:
+        return projectsList(user);
+      case 1:
+        return achievementsList(user);
+      case 2:
+        return skillsList(user);
+      default:
+        return projectsList(user);
+    }
+ } 
 
   Widget customAppBar() {
       return Container(
@@ -92,37 +98,45 @@ class _ProfileState extends State<Profile> {
             AssetImage('assets/matrix.jpg'),
             fit: BoxFit.cover
             ),
+        ),        
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              userImage(),
+              const SizedBox(height: 20),
+              userDetails(),
+              const SizedBox(height: 20),
+              percentBar()
+            ],
         ),
-        child:  Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 100,
-              backgroundImage: NetworkImage(user!.image.link),
+      );
+  }
+
+  Column userImage() {
+    return Column(
+        children: [
+          CircleAvatar(
+            radius: 100,
+            backgroundImage: NetworkImage(user!.image.link),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            user!.displayname,
+            style: const TextStyle(
+              fontSize: 22,
+              color: Colors.white,
+              fontWeight: FontWeight.bold
             ),
-            const SizedBox(height: 8),
-            Text(
-              user!.displayname,
-              style: const TextStyle(
-                fontSize: 22,
-                color: Colors.white,
-                fontWeight: FontWeight.bold
-              ),
+          ),
+          const SizedBox(height: 3),
+          Text(
+            user!.login,
+            style: const TextStyle(
+              fontSize: 15,
+              color: Colors.white
             ),
-            const SizedBox(height: 3),
-            Text(
-              user!.login,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.white
-              ),
-            ),
-            const SizedBox(height: 20),
-            userDetails(),
-            const SizedBox(height: 20),
-            percentBar()
-          ],            
-        ),
+          ),
+        ],            
       );
   }
 

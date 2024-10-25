@@ -27,4 +27,5 @@ com.example.swifty_companion.app-resValues-25 /home/jereverd/Documents/swifty_co
 com.example.swifty_companion.app-packageDebugResources-26 /home/jereverd/Documents/swifty_companion/build/app/intermediates/incremental/debug/packageDebugResources/merged.dir
 com.example.swifty_companion.app-packageDebugResources-27 /home/jereverd/Documents/swifty_companion/build/app/intermediates/incremental/debug/packageDebugResources/stripped.dir
 com.example.swifty_companion.app-merged_res-28 /home/jereverd/Documents/swifty_companion/build/app/intermediates/merged_res/debug
-com.example.swifty_companion.app-packaged_res-29 /home/jereverd/Documents/swifty_companion/build/shared_preferences_android/intermediates/packaged_res/debug
+com.example.swifty_companion.app-packaged_res-29 /home/jereverd/Documents/swifty_companion/build/fluttertoast/intermediates/packaged_res/debug
+com.example.swifty_companion.app-packaged_res-30 /home/jereverd/Documents/swifty_companion/build/shared_preferences_android/intermediates/packaged_res/debug

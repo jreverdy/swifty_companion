@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:swifty_companion/models/user_model.dart';
 import 'package:swifty_companion/pages/profile.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:swifty_companion/user_repository.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -75,11 +78,23 @@ class HomePage extends StatelessWidget {
                 borderSide: const BorderSide(color: Colors.white, width: 1), // Bordure lorsqu'il est sélectionné
               ),
             ),
-            onSubmitted: (value) {
+            onSubmitted: (value) async {
+                UserModel? user;
+                UserRepository repo = UserRepository();
                 if (value.isNotEmpty){
+                  user = await repo.fetchUser(value);
+                  if (user == null){
+                    Fluttertoast.showToast(
+                      msg: 'This user does not exist.',
+                      // backgroundColor: Colors.red,
+                      // textColor: Colors.white
+                    );
+                    return;
+                  }
                   Navigator.push(
+                    // ignore: use_build_context_synchronously
                     context,
-                    MaterialPageRoute(builder: (context) => Profile(data: value)),
+                    MaterialPageRoute(builder: (context) => Profile(userReceived: user,)),
                   );
                 }
             },

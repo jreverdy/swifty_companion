@@ -19,7 +19,6 @@ samples, guidance on mobile development, and a full API reference.
 ## TODO
 
 - gerer erreur login qui n'existe pas
-- chaine vide dans le textfield (error)
-- login piscineux qui fait crash
 - login new studs qui fait crash aussi
 - rendre tout ca beau
+- recreer token quand expired
