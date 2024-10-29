@@ -1,8 +1,8 @@
 import 'dart:convert'; // Pour encoder/décoder JSON
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:swifty_companion/auth_service.dart';
-import 'package:swifty_companion/generate_token.dart';
+import 'package:swifty_companion/utils/auth_service.dart';
+import 'package:swifty_companion/utils/generate_token.dart';
 import 'package:swifty_companion/models/user_model.dart';
 
 final Map<String, UserModel?> _userCache = {};
@@ -20,7 +20,6 @@ class UserRepository {
       return _userCache[username];
     }
     String? token = await getToken();
-    logger.i('token $token');
     try {
       final res = await http.get(
         Uri.parse('https://api.intra.42.fr/v2/users/$username'),

@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:swifty_companion/models/user_model.dart';
 import 'package:swifty_companion/pages/profile.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:swifty_companion/user_repository.dart';
+import 'package:swifty_companion/utils/user_repository.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});

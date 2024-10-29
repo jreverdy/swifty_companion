@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:swifty_companion/generate_token.dart';
+import 'package:swifty_companion/utils/generate_token.dart';
 import 'package:swifty_companion/pages/home.dart';
 
 Future <void> main() async {

@@ -99,17 +99,36 @@ class _ProfileState extends State<Profile> {
             fit: BoxFit.cover
             ),
         ),        
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              userImage(),
-              const SizedBox(height: 20),
-              userDetails(),
-              const SizedBox(height: 20),
-              percentBar()
-            ],
+        child: Stack(
+          children: [
+            goBackButton(),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  userImage(),
+                  const SizedBox(height: 20),
+                  userDetails(),
+                  const SizedBox(height: 20),
+                  percentBar()
+                ],
+            ),
+          ],
         ),
       );
+  }
+
+  Align goBackButton() {
+    return Align(
+                  alignment: const Alignment(-0.9, -0.8),
+                  child: IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    }, 
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 30,
+                      )) 
+                  );
   }
 
   Column userImage() {

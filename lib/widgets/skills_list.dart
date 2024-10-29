@@ -36,7 +36,7 @@ import 'package:swifty_companion/models/user_model.dart';
                     valueColor: const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 17, 158, 92)),
                   ),
                   Text(
-                    '${skill.level}%',
+                    '${((skill.level / 21) * 100).toStringAsFixed(0)}%',
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
