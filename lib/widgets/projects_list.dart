@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:swifty_companion/models/project_user_model.dart';
 import 'package:swifty_companion/models/user_model.dart';
 
 Widget projectsList(UserModel? user) {
@@ -16,7 +17,7 @@ Widget projectsList(UserModel? user) {
   return ListView.builder(
     itemCount: filteredProjects.length, 
     itemBuilder: (context, index) {
-      final projectUser = filteredProjects[index];
+      ProjectUserModel projectUser = filteredProjects[index];
       return Container(
         margin: const EdgeInsets.fromLTRB(7, 2, 7, 2),
         decoration: BoxDecoration(
@@ -27,7 +28,14 @@ Widget projectsList(UserModel? user) {
           title: Text(projectUser.project.name), 
           subtitle: Text(projectUser.status), 
           trailing: projectUser.isValidated == true
-              ? const Icon(Icons.check, color: Colors.green) 
+              ? Text(
+                  '${projectUser.finalMark}',
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 17, 158, 92)
+                  ),
+                )
               : const Icon(Icons.close, color: Colors.red),
         ),
       );
