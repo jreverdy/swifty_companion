@@ -1,1 +1,0 @@
- /home/jereverd/Documents/swifty_companion/.dart_tool/flutter_build/62ac175f0076f84eb61d0c53934e28f6/native_assets.yaml: 

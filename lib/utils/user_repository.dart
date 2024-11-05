@@ -34,7 +34,6 @@ class UserRepository {
         return user;
       } 
       else if (res.statusCode == 401) {
-        logger.i('from unauthorized');
         await generateToken();
         return await fetchUser(username); 
       } 

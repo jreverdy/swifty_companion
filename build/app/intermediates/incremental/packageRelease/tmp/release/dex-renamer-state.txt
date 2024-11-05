@@ -1,4 +1,0 @@
-#Fri Oct 25 18:17:52 CEST 2024
-base.0=/home/jereverd/Documents/swifty_companion/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

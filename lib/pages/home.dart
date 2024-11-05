@@ -86,8 +86,6 @@ class HomePage extends StatelessWidget {
                   if (user == null){
                     Fluttertoast.showToast(
                       msg: 'This user does not exist.',
-                      // backgroundColor: Colors.red,
-                      // textColor: Colors.white
                     );
                     return;
                   }
