@@ -1,24 +1,31 @@
-# swifty_companion
+# 42 Student Info App (Flutter)
 
-A new Flutter project.
+This project is a mobile application built using **Flutter** that retrieves and displays information about students from the 42 API. It includes a login mechanism with OAuth2 authentication and presents various details about the student, such as their login, email, skills, completed projects, and more.
 
-## Getting Started
+## **Project Overview**
 
-This project is a starting point for a Flutter application.
+The purpose of this project is to familiarize with mobile programming, working with APIs (specifically the 42 API), and Flutter as a mobile framework. The app allows users to interact with the 42 API to fetch and display data for a selected student. The app handles errors, displays relevant information, and ensures a smooth user experience across different screen sizes.
 
-A few resources to get you started if this is your first Flutter project:
+## **Features**
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Login Screen**: Allows users to log in using OAuth2 authentication and retrieve data from the 42 API.
+- **Student Info Screen**: Displays detailed information about a selected student, including:
+  - Login, email, mobile, level, location, wallet, evaluations, and profile picture.
+  - Skills with level and percentage.
+  - List of projects (including failed ones).
+- **Error Handling**: Handles errors such as login not found, network errors, etc.
+- **Navigation**: Allows navigation between views, including going back to the login screen.
+- **Responsive Layout**: Uses modern layout techniques to ensure the app looks good on different screen sizes and platforms.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## **Bonus Features**
 
+- **Token Refresh**: Automatically refreshes the OAuth2 token when it expires to ensure seamless operation without the need for the user to log in again.
 
-## TODO
+## **Tech Stack**
 
-- gerer erreur login qui n'existe pas
-- login new studs qui fait crash aussi
-- rendre tout ca beau
-- recreer token quand expired
+- **Flutter**: Framework for building the cross-platform mobile app.
+- **Dart**: Programming language used with Flutter.
+- **42 API**: API used to fetch student data.
+- **OAuth2**: Authentication method used to securely retrieve data from the 42 API.
+
+##
