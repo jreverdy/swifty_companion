@@ -2,6 +2,8 @@
 
 This project is a mobile application built using **Flutter** that retrieves and displays information about students from the 42 API. It includes a login mechanism with OAuth2 authentication and presents various details about the student, such as their login, email, skills, completed projects, and more.
 
+![Demo Video](https://github.com/jreverdy/swifty_companion/blob/main/readme_assets/video/swifty_companion.mp4)
+
 ## **Project Overview**
 
 The purpose of this project is to familiarize with mobile programming, working with APIs (specifically the 42 API), and Flutter as a mobile framework. The app allows users to interact with the 42 API to fetch and display data for a selected student. The app handles errors, displays relevant information, and ensures a smooth user experience across different screen sizes.
