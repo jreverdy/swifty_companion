@@ -2,7 +2,11 @@
 
 This project is a mobile application built using **Flutter** that retrieves and displays information about students from the 42 API. It includes a login mechanism with OAuth2 authentication and presents various details about the student, such as their login, email, skills, completed projects, and more.
 
-![Demo Video](https://github.com/jreverdy/swifty_companion/blob/main/readme_assets/video/swifty_companion.mp4)
+![Demo Video](https://github.com/user-attachments/assets/56f55b4f-6eaf-4762-a5b8-650a60d3ee07)
+
+
+
+
 
 ## **Project Overview**
 
